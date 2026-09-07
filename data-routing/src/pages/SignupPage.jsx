@@ -34,8 +34,7 @@ const Signup = () => {
               type="text"
               placeholder="Enter your username"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg
-                         focus:outline-none focus:ring-2 focus:ring-blue-500
-                         focus:border-transparent"
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -48,8 +47,7 @@ const Signup = () => {
               type="email"
               placeholder="Enter your email"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg
-                         focus:outline-none focus:ring-2 focus:ring-blue-500
-                         focus:border-transparent"
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
@@ -62,8 +60,7 @@ const Signup = () => {
               type="password"
               placeholder="Enter your password"
               className="w-full px-4 py-3 border border-gray-300 rounded-lg
-                         focus:outline-none focus:ring-2 focus:ring-blue-500
-                         focus:border-transparent"
+                         focus:outline-none focus:ring-2 focus:ring-blue-500"
             />
           </div>
 
