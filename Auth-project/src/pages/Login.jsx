@@ -1,12 +1,16 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import { Mail, Lock } from 'lucide-react';
 import { useNavigate } from 'react-router';
 import { useForm } from 'react-hook-form';
-import { data } from 'react-router';
+import { AuthStore } from '../contextApi/AuthContext';
+
+
 
 export default function Login() {
 
     const navigate = useNavigate();
+
+    const { loggedUser, setLoggedUser,signupUsers } = useContext(AuthStore);
 
     const {
         register,
@@ -19,8 +23,26 @@ export default function Login() {
 
     console.log("hello")
 
-    const handleForm = handleSubmit((value)=>{
-        console.log(value)
+    const handleForm = handleSubmit((data)=>{
+
+
+       const isUserLogin = signupUsers.find((value) => value.email === data.email && value.password === data.password)
+
+       if(!isUserLogin){
+        alert("User not found");
+        return;
+       }
+
+       if(isUserLogin){
+      
+        setLoggedUser(data)
+
+        localStorage.setItem("loggedUser", JSON.stringify(data))
+
+        navigate("/main")
+       }
+
+    
 
         reset()
     })
@@ -53,7 +75,7 @@ export default function Login() {
               <label className="block text-sm font-medium text-gray-700 mb-1.5">
                 Email address
               </label>
-              <div className="relative">
+              <div className="relative text-gray-900">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <Mail className="h-5 w-5 text-gray-400" />
                 </div>
@@ -66,7 +88,7 @@ export default function Login() {
                     }
                   })}
                   type="email"
-                  className="block w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-3 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
                   placeholder="name@company.com"
                 />
                 {errors.email && <p className="text-red-500">{errors.email.message}</p>}
@@ -80,7 +102,7 @@ export default function Login() {
                   Password
                 </label>
               </div>
-              <div className="relative">
+              <div className="relative text-gray-900">
                 <div className="pointer-events-none absolute inset-y-0 left-0 flex items-center pl-3">
                   <Lock className="h-5 w-5 text-gray-400" />
                 </div>
@@ -92,7 +114,7 @@ export default function Login() {
                     }
                   })}
                   type="password"
-                  className="block w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-3 text-gray-900 placeholder-gray-400 focus:border-blue-500 focus:outline-none focus:ring-1 focus:ring-blue-500 sm:text-sm"
+                  className="block w-full rounded-lg border border-gray-300 bg-white py-2.5 pl-10 pr-3 placeholder:text-gray-400 focus:outline-none focus:ring-2 focus:ring-blue-500 sm:text-sm"
                   placeholder="••••••••"
                 />
                 {errors.password && <p className="text-red-500">{errors.password.message}</p>}
@@ -104,7 +126,7 @@ export default function Login() {
           <div>
             <button
               type="submit"
-              className="flex w-full justify-center rounded-lg bg-blue-600 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors duration-200"
+              className="flex w-full justify-center rounded-lg bg-blue-600 px-3 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-blue-500 focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-blue-600 transition-colors duration-200"
             >
               Sign in
             </button>

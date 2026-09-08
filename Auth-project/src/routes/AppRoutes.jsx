@@ -5,6 +5,8 @@ import Contactpage from '../pages/Contactpage'
 import AuthLayout from '../layouts/AuthLayout'
 import Signup from '../pages/Signup'
 import Login from '../pages/Login'
+import ProtectedRoutes from './ProtectedRoutes'
+import MainLayout from '../layouts/MainLayout'
 
 const AppRoutes = () => {
 
@@ -20,6 +22,15 @@ const AppRoutes = () => {
                 {
                     path: "signup",
                     element: <Signup />
+                }
+            ]
+        },{
+            path:"/main",
+            element: <ProtectedRoutes />,
+            children: [
+                {
+                    path:"",
+                    element: <MainLayout />
                 }
             ]
         }
