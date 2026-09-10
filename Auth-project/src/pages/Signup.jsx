@@ -29,7 +29,7 @@ export default function Signup() {
         setLoggedUser(data);
 
         localStorage.setItem("users",JSON.stringify(users));
-        localStorage.setItem("loginUsers",JSON.stringify(data));
+        localStorage.setItem("loggedUser",JSON.stringify(data));
 
 
         navigate("/main")

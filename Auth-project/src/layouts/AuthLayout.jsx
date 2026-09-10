@@ -1,8 +1,21 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import { Outlet } from 'react-router'
+import { AuthStore } from '../contextApi/AuthContext';
+import {Navigate} from 'react-router';
 
 const AuthLayout = () => {
-  return (
+
+
+  const { loggedUser } = useContext(AuthStore);
+  
+   if(loggedUser){
+    console.log("welcome")
+    return <Navigate to={"/main"} />    
+   }
+
+
+
+  return (  
     <>
     <Outlet />
     </>

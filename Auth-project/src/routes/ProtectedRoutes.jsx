@@ -6,11 +6,7 @@ const ProtectedRoutes = () => {
 
     const { loggedUser } = useContext(AuthStore)
 
-    
-
     if(!loggedUser){
-
-        console.log("hero")
 
         return <Navigate to={"/"} />
 
@@ -18,7 +14,6 @@ const ProtectedRoutes = () => {
 
   return (
     <>
-     
     <Outlet />
     </>
   )
