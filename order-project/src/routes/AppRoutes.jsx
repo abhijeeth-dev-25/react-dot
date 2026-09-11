@@ -9,14 +9,18 @@ import PrivateRoutes from './PrivateRoutes';
 import UsersPage from '../pages/UsersPage';
 import ItemsPage from '../pages/ItemsPage';
 import CartPage from '../pages/CartPage';
+import MainLayouts from '../layouts/MainLayouts';
 
 const router = createBrowserRouter([
-  {
-        path: "/",
+  { 
+    // Public Routes Guard (Pathless Layout Route)
+    element: <PublicRoutes />, 
+    children: [
+      {
         element: <AuthLayouts />,
         children: [
           {
-            path: "",
+            path: "/",
             element: <LoginPage />
           },
           {
@@ -24,26 +28,33 @@ const router = createBrowserRouter([
             element: <SignupPage />
           }
         ]
+      }
+    ]
   },
-  {
-    path: "/",
+  { 
+    // Protected / Private Routes Guard (Pathless Layout Route)
     element: <PrivateRoutes />,
     children: [
       {
-        path: "home",
-        element: <HomePage />
-      },
-      {
-        path: "users",
-        element: <UsersPage />
-      },
-      {
-        path: "items",
-        element: <ItemsPage />
-      },
-      {
-        path: "cart",
-        element: <CartPage />
+        element:<MainLayouts />,
+        children: [
+          {
+            path: "home", 
+            element:<HomePage />
+          },
+          {
+            path: "users",
+            element:<UsersPage />
+          },
+          {
+            path: "items",
+            element:<ItemsPage />
+          },
+          {
+            path: "cart",
+            element:<CartPage />
+          }
+        ]
       }
     ]
   }

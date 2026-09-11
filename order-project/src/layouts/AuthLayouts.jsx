@@ -1,17 +1,11 @@
-import React, { useContext } from 'react';
-import { Navigate, Outlet } from 'react-router';
-import { AuthProviderStore } from '../contextApi/authStore';
+import React from 'react'
+import { Outlet } from 'react-router'
 
 const AuthLayouts = () => {
-  const { isUserLoggedIn } = useContext(AuthProviderStore);
-
-  return isUserLoggedIn ? (
-    <Navigate to="/home" replace />
-  ) : (
+  return (
     <div>
-      <Outlet />
-    </div>
-  );
-};
+      <Outlet /></div>
+  )
+}
 
-export default AuthLayouts;
+export default AuthLayouts

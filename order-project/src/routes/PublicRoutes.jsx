@@ -1,14 +1,18 @@
-import React from 'react'
-import { Outlet } from 'react-router'
+import React, { useContext } from 'react'
+import { Navigate, Outlet } from 'react-router'
+import { AuthProviderStore } from '../contextApi/authStore';
+
 
 const publicRoutes = () => {
+const { isUserLoggedIn } = useContext(AuthProviderStore);
 
-  
-  return (
+  return isUserLoggedIn ? (
+    <Navigate to="/home" replace />
+  ) : (
     <div>
-        <Outlet />
+      <Outlet />
     </div>
-  )
-}
+  );
+};
 
 export default publicRoutes
