@@ -1,34 +1,14 @@
 import { useNavigate } from "react-router";
-import { useForm } from 'react-hook-form';
-import { useContext } from "react";
-import { AuthProviderStore } from "../contextApi/authStore";
+import AuthHook from "../Hooks/AuthHook";
+
 
 
 const LoginPage = () => {
   const navigate = useNavigate();
 
-  const { isUserLoggedIn, setIsUserLoggedIn, signupUsers } = useContext(AuthProviderStore)
+  const { register, handleSubmit, handleLogin, errors} = AuthHook();
 
-  const { register, reset, handleSubmit, formState:{errors} } = useForm();
-
-  const handleLogin = (data) => {
-    console.log(data);
-
-     const foundUser = signupUsers.find((user) => {
-      return user.email === data.email && user.password === data.password 
-     })
-
-     if(foundUser){
-      setIsUserLoggedIn(foundUser);
-      localStorage.setItem("isUserLoggedIn", JSON.stringify(foundUser));
-      navigate('/home', { replace: true });
-     }else{
-      alert("user not found");
-     }
-
-
-    reset();
-  }
+  
 
   return (
     <div className="flex min-h-screen items-center justify-center bg-gray-100 px-4">

@@ -1,7 +1,22 @@
 import React from 'react'
-import { NavLink } from 'react-router'
+import { NavLink, useNavigate } from 'react-router'
+import { AuthProviderStore } from '../contextApi/authStore'
+import { useContext } from 'react'
 
 const Navbar = () => {
+
+    const navigate = useNavigate();
+
+    const { setIsUserLoggedIn } = useContext(AuthProviderStore);
+
+    const handleLogout = () => {
+        localStorage.removeItem('isUserLoggedIn');
+        setIsUserLoggedIn(null); 
+        navigate('/', { replace: true });
+    };
+
+
+
     return (
             <nav className='bg-gray-200 flex flex-col items-center justify-between p-5 '>
                 <div className='h-[30%] w-full flex flex-col items-center justify-between'>
@@ -36,7 +51,9 @@ const Navbar = () => {
 
                     </ul>
                 </div>
-                <button className='h-10 w-23 bg-black text-white rounded '>Logout</button>
+                <button 
+                onClick={handleLogout}
+                className='h-10 w-23 bg-black text-white rounded '>Logout</button>
             </nav>
     )
 }
