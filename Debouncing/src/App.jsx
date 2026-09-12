@@ -1,34 +1,79 @@
-import { useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
+import axios from 'axios';
+import { useEffect, useState } from 'react';
 
-function App() {
-  const [count, setCount] = useState(0)
+const App = () => {
+
+  const [allProducts, setAllProducts] = useState([])
+
+  const [product, setProduct] = useState([])
+
+  const [search, setSearch] = useState(null)
+
+  const data = async()=>{
+    try {
+      const res = await axios.get("https://fakestoreapi.com/products");
+      setAllProducts(res.data)
+      setProduct(res.data)
+    } catch (error) {
+      console.log(error)  
+    }
+  }
+
+  const searchResult = () => {
+
+    if (!search?.trim()) {
+      setProduct(allProducts);
+      return;
+    }
+
+    const result =  allProducts.filter((data)=>{
+      return data.title.toLowerCase().includes(search.toLowerCase())
+    })
+
+    setProduct(result)
+  }
+   
+
+  useEffect(()=>{
+
+     console.log("running...")
+
+     const timeout =setTimeout(()=>{
+      searchResult()
+      console.log("executed")
+     },700)
+ 
+    return () => clearTimeout(timeout);
+
+  },[search])
+
+
+
+  useEffect(()=>{
+     data()
+  },[])
+
+
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
+    <div className='p-7'>
+
+      <input 
+      onChange={(e)=>{
+          setSearch(e.target.value)
+      }}
+      className='h-10 w-75 bg-gray-200 rounded-full p-4 mb-10'
+      type="text" placeholder='Enter product name' />
+
+      <div className='flex flex-col'>
+        {product.map((data)=>{
+
+          return <div key={data.id} className="text-black">{data.title}</div>
+
+        })}
       </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
+
+    </div>
   )
 }
 
