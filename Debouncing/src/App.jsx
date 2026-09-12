@@ -21,7 +21,7 @@ const App = () => {
 
   const searchResult = () => {
 
-    if (!search?.trim()) {
+    if (!search || !search.trim()) {
       setProduct(allProducts);
       return;
     }
@@ -37,6 +37,8 @@ const App = () => {
   useEffect(()=>{
 
      console.log("running...")
+
+     if (search === null) return;
 
      const timeout =setTimeout(()=>{
       searchResult()
