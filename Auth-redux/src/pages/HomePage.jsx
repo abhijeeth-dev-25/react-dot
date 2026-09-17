@@ -1,6 +1,7 @@
 import React, { useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
 import { increment, decrement, incrementByAmount } from '../features/counterSlice'
+import { useAuth } from '../hooks/useAuth'
 
 
 const HomePage = () => {
@@ -8,6 +9,8 @@ const HomePage = () => {
     const [data, setData] = useState('')
 
     const dispatch = useDispatch()
+
+    const { handleLogout} = useAuth()
 
     const {value} = useSelector((store)=>(store.counter))
 
@@ -36,6 +39,9 @@ const HomePage = () => {
        className='border border-black m-5 rounded-2xl p-2'
        onClick={()=> dispatch(incrementByAmount(data))}
        >Add value</button>
+
+
+       <button className='border border-black m-5  bg-gray-600 text-white rounded-2xl h-10 w-30' onClick={handleLogout}>Logout</button>
         </div>
     )
 }

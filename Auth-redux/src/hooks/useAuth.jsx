@@ -2,7 +2,7 @@ import { useNavigate } from "react-router"
 import { useForm } from "react-hook-form"
 import { useState } from "react"
 import { useDispatch, useSelector } from "react-redux"
-import { setUser } from "../features/authSlice"
+import { setUser, removeUser } from "../features/authSlice"
 
 export const useAuth = () => {
 
@@ -29,6 +29,7 @@ export const useAuth = () => {
 
       if(res){
             dispatch(setUser(data))
+            localStorage.setItem("loggedUser", JSON.stringify(data))
             navigate('/main')
       }else{
             alert("Please enter correct username and password")
@@ -46,6 +47,12 @@ export const useAuth = () => {
       reset()
       console.log("user->", res)
     }
+
+    const handleLogout = () =>{
+      localStorage.removeItem('loggedUser')
+      dispatch(removeUser())
+      navigate('/')
+    }
     
     
 
@@ -56,6 +63,7 @@ export const useAuth = () => {
        loginSubmit,
        signupSubmit,
        errors,
+       handleLogout
     }
 }
 
