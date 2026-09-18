@@ -1,6 +1,6 @@
 const ProductCardSkeleton = () => {
   return (
-    <div className="w-full min-w-[255px] overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
+    <div className="w-full max-w-sm overflow-hidden rounded-xl border border-gray-200 bg-white shadow-sm">
 
       {/* Image Skeleton */}
       <div className="h-56 w-full animate-pulse bg-gray-200" />
