@@ -1,6 +1,8 @@
-
+import { useAuth } from "../../hooks/useAuthHook";
 
 const SignupPage = () => {
+
+  const { navigate, handleSubmit, errors, register, handleSignup } = useAuth();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -19,6 +21,7 @@ const SignupPage = () => {
 
         {/* Form */}
         <form 
+        onSubmit={handleSubmit(handleSignup)}
         className="space-y-5">
 
           {/* Username */}
@@ -31,11 +34,16 @@ const SignupPage = () => {
             </label>
 
             <input
+              {...register("username",{
+                required: "Username is required"
+              })}
               id="username"
               type="text"
               placeholder="Enter your username"
               className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
             />
+
+            {errors.name && <p className="text-sm text-red-600 mt-1">{errors.name.message}</p>}
 
             
           </div>
@@ -50,11 +58,16 @@ const SignupPage = () => {
             </label>
 
             <input
+              {...register("email",{
+                required: "Email is required",
+                
+              })}
               id="email"
               type="email"
               placeholder="Enter your email"
               className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
             />
+            {errors.email && <p className="text-sm text-red-600 mt-1">{errors.email.message}</p>}
             
           </div>
 
@@ -68,12 +81,17 @@ const SignupPage = () => {
             </label>
 
             <input
+              {...register("password", {
+                required: "Password is required",
+                minLength: 6,
+                message: "Password must be at least 6 characters long"
+              })}
               id="password"
               type="password"
               placeholder="Enter your password"
               className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
             />
-            
+            {errors.password && <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>}
           </div>
 
           {/* Signup Button */}
@@ -90,7 +108,7 @@ const SignupPage = () => {
         <div className="mt-6 text-center text-sm text-gray-500">
           Already have an account?{" "}
           <button
-            
+            onClick={()=>navigate('/')}
             className="font-semibold text-black hover:underline"
           >
             Login

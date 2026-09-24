@@ -1,5 +1,9 @@
+import { useAuth } from "../../hooks/useAuthHook";
+
 
 const LoginPage = () => {
+
+  const { navigate, register, handleSubmit, errors, handelLogin } = useAuth();
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gray-100 px-4">
@@ -17,25 +21,28 @@ const LoginPage = () => {
 
         {/* Form */}
         <form 
-       
+        onSubmit={handleSubmit(handelLogin)}
         className="space-y-5">
           
           {/* Email */}
           <div>
             <label
-              htmlFor="email"
+              htmlFor="username"
               className="mb-2 block text-sm font-medium text-gray-700"
             >
-              Email
+              Username
             </label>
 
             <input
-              
-              id="email"
-              type="email"
-              placeholder="Enter your email"
+              {...register("username",{
+                required: "username is required"
+              })}
+              id="username"
+              type="text"
+              placeholder="Enter your username"
               className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
             />
+            {errors.username && <p className="text-sm text-red-600 mt-1">{errors.username.message}</p>}
           </div>
 
           {/* Password */}
@@ -48,12 +55,17 @@ const LoginPage = () => {
             </label>
 
             <input
-             
+              {...register("password", {
+                required: "Password is required",
+                minLength: 6,
+                message: "Password must be at least 6 characters long"
+              })}
               id="password"
               type="password"
               placeholder="Enter your password"
               className="w-full rounded-lg border border-gray-300 px-4 py-3 text-sm outline-none transition focus:border-black focus:ring-2 focus:ring-gray-200"
             />
+            {errors.password && <p className="text-sm text-red-600 mt-1">{errors.password.message}</p>}
             
           </div>
 
@@ -68,7 +80,8 @@ const LoginPage = () => {
         </form>
 
         <div className="mt-6 text-center text-sm text-gray-500"> Don't have an account?{" "} 
-          <button className="font-semibold text-black hover:underline" > Sign up </button> 
+          <button onClick={() => navigate('/Signup')}
+          className="font-semibold text-black hover:underline" > Sign up </button> 
           </div>
 
       </div>
